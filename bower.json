@@ -1,0 +1,34 @@
+{
+  "name": "webProject_scaffolding",
+  "version": "0.0.1",
+  "homepage": "https://github.com/dstyle0210/webProject_scaffolding",
+  "authors": [
+    "dstyle <dstyle0210@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "*",
+    "jquery": "*",
+    "dstyle_resetCSS": "*"
+  },
+  "overrides": {
+    "bootstrap": {
+      "main": [
+        "dist/css/bootstrap.min.css",
+        "dist/fonts/*",
+        "dist/js/bootstrap.min.js"
+      ]
+    },
+    "jquery": {
+      "main": "dist/jquery.min.js"
+    }
+  },
+  "devDependencies": {}
+}
