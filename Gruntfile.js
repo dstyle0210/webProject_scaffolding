@@ -64,10 +64,10 @@ replace: {
 		src: ['dist/asset/css/*.css'],
 		overwrite: true, 
 		replacements: [
-			{ from: /}/g, to: "}\n" },
-			{from:"UTF-8\";",to:"UTF-8\";\n"},
-			{from:"*/",to:"*/\n"},
-			{from:"/*!",to:"\n/*!"}
+			{from: /}/g,to: "}\n"}, // 중괄호 줄바꿈.
+			{from:"UTF-8\";",to:"UTF-8\";\n"}, // 캐릭터셋 줄바꿈.
+			{from:"*/",to:"*/\n"}, // 주석코드 마지막 줄바꿈.
+			{from:"/*!",to:"\n/*!"} // 주석코드 맨처음 줄바꿈.
 		]
 	}
 },
@@ -79,8 +79,8 @@ clean: {
 },
 // Watch
 watch: {
-	less:{
-		files: ['src/asset/**/*.less'], // LESS파일이 수정되면 실행
+	less:{ // LESS파일이 수정되면 실행
+		files: ['src/asset/**/*.less'],
 		tasks: ['less:dev','autoprefixer:dev'] 
 	}
 },
@@ -127,7 +127,7 @@ copy: {
 	
 	
 	// Default task(s).
-	grunt.registerTask('setting', ["bower-install-simple:prod","bower:dev"]);
-	grunt.registerTask('dist', ["clean:dist","copy:dist","cssmin","clean:pick","replace:dist","fileindex","casperjs"]);
-	grunt.registerTask('default', ["clean:dev","less:dev","autoprefixer:dev","watch"]);
+	grunt.registerTask('default', ["clean:dev","less:dev","autoprefixer:dev","watch"]); // 개발중에 사용.
+	grunt.registerTask('setting', ["bower-install-simple:prod","bower:dev"]); // 초기에 파일셋팅해 주는것.
+	grunt.registerTask('dist', ["clean:dist","copy:dist","cssmin","clean:pick","replace:dist","fileindex","casperjs"]); // 배포시에 사용.
 };
