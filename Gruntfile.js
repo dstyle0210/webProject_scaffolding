@@ -41,7 +41,7 @@ less:{
 // Autoprefixer
 autoprefixer : {
 	options : {
-		browsers: ['last 5 version','ie 8','ie 9','ie 10']
+		browsers: ['last 5 version','ie 7','ie 8','ie 9','ie 10','ie 11']
 	},
 	dev: {
 		src: 'src/asset/css/*.css'
@@ -56,12 +56,37 @@ cssmin: {
 		expand: true,
 		src: ['dist/asset/css/style.css'],
 		ext: '.min.css'
-	}
+	},
+	dev: { // 배포할때만 압축한다.
+		expand: true,
+		src: ['src/asset/css/*.css'],
+		ext: '.css'
+	} 
+},
+// CSS Comb
+csscomb: {
+    dynamic_mappings: {
+        expand: true,
+        cwd: 'src/asset/css/',
+        src: ['*.css', '!*.resorted.css'],
+        dest: 'src/asset/css/',
+        ext: '.css'
+    }
 },
 // text Replace by CSS
 replace: {
 	dist:{
 		src: ['dist/asset/css/*.css'],
+		overwrite: true, 
+		replacements: [
+			{from: /}/g,to: "}\n"}, // 중괄호 줄바꿈.
+			{from:"UTF-8\";",to:"UTF-8\";\n"}, // 캐릭터셋 줄바꿈.
+			{from:"*/",to:"*/\n"}, // 주석코드 마지막 줄바꿈.
+			{from:"/*!",to:"\n/*!"} // 주석코드 맨처음 줄바꿈.
+		]
+	},
+	dev:{
+		src: ['src/asset/css/*.css'],
 		overwrite: true, 
 		replacements: [
 			{from: /}/g,to: "}\n"}, // 중괄호 줄바꿈.
@@ -81,7 +106,7 @@ clean: {
 watch: {
 	less:{ // LESS파일이 수정되면 실행
 		files: ['src/asset/**/*.less'],
-		tasks: ['less:dev','autoprefixer:dev'] 
+		tasks: ['dev'] 
 	}
 },
 // COPY
@@ -127,7 +152,8 @@ copy: {
 	
 	
 	// Default task(s).
-	grunt.registerTask('default', ["clean:dev","less:dev","autoprefixer:dev","watch"]); // 개발중에 사용.
+	grunt.registerTask('default', ["clean:dev","dev","watch"]); // 개발중에 사용.
+	grunt.registerTask('dev', ["less:dev","autoprefixer:dev","csscomb","cssmin:dev","replace:dev"]); // 개발중에 사용.
 	grunt.registerTask('setting', ["bower-install-simple:prod","bower:dev"]); // 초기에 파일셋팅해 주는것.
 	grunt.registerTask('dist', ["clean:dist","copy:dist","cssmin","clean:pick","replace:dist","fileindex","casperjs"]); // 배포시에 사용.
 };

@@ -17,6 +17,7 @@
     "grunt-contrib-less": "^1.0.1",
     "grunt-contrib-requirejs": "^0.4.4",
     "grunt-contrib-watch": "^0.6.1",
+    "grunt-csscomb": "^3.0.1",
     "grunt-fileindex": "^0.1.0",
     "grunt-http": "^1.6.0",
     "grunt-init": "^0.3.2",
