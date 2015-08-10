@@ -1,0 +1,24 @@
+@import "val.less";
+
+// overflow , text-overflow
+.text-overflow(){.overflow();text-overflow:ellipsis;white-space:nowrap;zoom:1;}
+.text-overflow(@wid){ .text-overflow();display:inline-block;max-width:@wid;vertical-align:middle;}
+.overflow(@type:hidden){overflow:@type;}
+
+// 아이콘일경우
+.icon(@url,@px){background:url(@url) no-repeat left center;padding-left:@px;}
+// clearFix
+.clearfix() {*zoom: 1;&:before,&:after {display: table;content: "";line-height: 0;}&:after {clear: both;}}
+//TTS 코드
+.sr-only(){position: absolute;width: 1px;height: 1px;margin: -1px;padding: 0;overflow: hidden;clip: rect(0,0,0,0);border: 0;}
+// 투명도
+.opacity(@number){@num : @number * 100;opacity:@number;filter:alpha(opacity=@num); zoom:1;}
+
+
+// 인풋+버튼 패턴
+.generate-columns(@n, @i:1,@lpx,@ppx) when (@i =< @n) {
+  &.length@{i}{
+  	padding-right:(@i * @lpx) + @ppx;
+  }
+  .generate-columns(@n, (@i + 1),@lpx,@ppx);
+}

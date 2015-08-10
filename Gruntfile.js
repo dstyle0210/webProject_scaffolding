@@ -2,36 +2,46 @@ module.exports = function(grunt) {
 	// Project configuration.
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
-		bower: {
-	        dev: {
-	            base: 'bower_components', /* the path to the bower_components directory */
-	            dest: './src/lib',
-	            options: {
-	                checkExistence: true,
-	                debugging: true,
-	                paths: {
-	                    bowerDirectory: 'bower_components',
-	                    bowerrc: '.bowerrc',
-	                    bowerJson: 'bower.json'
-	                }
-	            }
-	        }
-	    },
-	    "bower-install-simple": {
-	        options: {
-	            color: true
-	        },
-	        "prod": {
-	            options: {
-	                production: true
-	            }
-	        },
-	        "dev": {
-	            options: {
-	                production: false
-	            }
-	        }
-	    },
+
+		
+
+// javascript 라이브러리 로딩(setting)
+// bower 가져온 라이브러리 복사.(bower.json 에서 main파일들 자동복사)
+bower: { 
+    dev: {
+        base: 'bower_components', /* the path to the bower_components directory */
+        dest: './src/lib',
+        options: {
+            checkExistence: true,
+            debugging: true,
+            paths: {
+                bowerDirectory: 'bower_components',
+                bowerrc: '.bowerrc',
+                bowerJson: 'bower.json'
+            }
+        }
+    }
+},
+// bower.json install
+"bower-install-simple": {
+    options: {
+        color: true
+    },
+    "prod": {
+        options: {
+            production: true
+        }
+    },
+    "dev": {
+        options: {
+            production: false
+        }
+    }
+},
+	    
+	    
+	    
+	    
 // LESS Precompaper.
 less:{
 	dev:{
@@ -65,6 +75,9 @@ cssmin: {
 },
 // CSS Comb
 csscomb: {
+	options:{
+		config:"zen.json"
+	},
     dynamic_mappings: {
         expand: true,
         cwd: 'src/asset/css/',
@@ -117,6 +130,7 @@ copy: {
 },
 
 
+
 		 casperjs: {
 			 options: {},
 		    files: 'src/casper.js' 
@@ -152,7 +166,7 @@ copy: {
 	
 	
 	// Default task(s).
-	grunt.registerTask('default', ["clean:dev","dev","watch"]); // 개발중에 사용.
+	grunt.registerTask('default', ["clean:dev","dev","watch"]); // 디폴트 , 와치시작.
 	grunt.registerTask('dev', ["less:dev","autoprefixer:dev","csscomb","cssmin:dev","replace:dev"]); // 개발중에 사용.
 	grunt.registerTask('setting', ["bower-install-simple:prod","bower:dev"]); // 초기에 파일셋팅해 주는것.
 	grunt.registerTask('dist', ["clean:dist","copy:dist","cssmin","clean:pick","replace:dist","fileindex","casperjs"]); // 배포시에 사용.
