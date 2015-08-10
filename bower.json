@@ -18,7 +18,8 @@
     "jquery": "*",
     "dstyle_resetCSS": "*",
     "html5shiv": "~3.7.3",
-    "respond": "~1.4.2"
+    "respond": "~1.4.2",
+    "lesshat": "~3.0.2"
   },
   "overrides": {
     "bootstrap": {
@@ -31,11 +32,11 @@
     "jquery": {
       "main": "dist/jquery.min.js"
     },
-    "respond":{
-    	"main":"dest/respond.min.js" 
+    "respond": {
+      "main": "dest/respond.min.js"
     },
-    "html5shiv":{
-    	"main":"dist/html5shiv.min.js" 
+    "html5shiv": {
+      "main": "dist/html5shiv.min.js"
     }
   },
   "devDependencies": {}
