@@ -136,6 +136,7 @@ copy: {
 		files:[
 		       {expand: true,cwd: 'src/lib/',src: '**/*.css',dest: 'src/asset/css/lib/',flatten: true,filter: 'isFile'},
 		       {expand: true,cwd: 'src/lib/',src: '**/*.js',dest: 'src/asset/js/lib/',flatten: true,filter: 'isFile'},
+		       {expand: true,cwd: 'src/lib/',src: '**/*.less',dest: 'src/asset/less/lib/',flatten: true,filter: 'isFile'},
 		       {expand: true,cwd: 'src/lib/',src: '**/fonts/**',dest: 'src/asset/css/fonts/',flatten: true,filter: 'isFile'},
 		       ]
 	}

@@ -245,6 +245,8 @@
         "src",
         "line-height",
         "opacity",
+        "-webkit-opacity",
+        "-moz-opacity",
         "-ms-filter:\\'progid:DXImageTransform.Microsoft.Alpha",
         "filter:progid:DXImageTransform.Microsoft.Alpha(Opacity",
         "-ms-interpolation-mode",
