@@ -16,7 +16,8 @@ casper.start(url,function(){
 	for(i=0;i<links.length;i++){
 		if((links[i])!=""){
 			var t = (links[i]).indexOf("javascript");
-			if(t=="-1"){
+			var t2 = (links[i]).indexOf("inc/");
+			if(t=="-1" && t2=="-1"){
 				if((links[i]).indexOf("#")!=0 && (links[i]).indexOf("http")!=0 && (links[i]).indexOf("mailto")!=0){
 					newLinks.push(links[i]);
 				}

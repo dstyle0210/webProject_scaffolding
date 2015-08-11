@@ -111,8 +111,9 @@ replace: {
 },
 // Clean
 clean: {
+	lib:["src/lib"],
 	dev: ["src/asset/css"], // 개발하는중에 CSS삭제.
-	dist: ["dist/asset/css"], // 배포하는중에 CSS삭제.
+	dist: ["dist"], // 배포하는중에 CSS삭제.
 	pick:["dist/asset/css/*.css","!dist/asset/css/*.min.css"] // 배포후 컴바인 후에 min을 제외한 CSS삭제.
 },
 // Watch
@@ -181,6 +182,6 @@ copy: {
 	// Default task(s).
 	grunt.registerTask('default', ["clean:dev","dev","watch"]); // 디폴트 , 와치시작.
 	grunt.registerTask('dev', ["less:dev","autoprefixer:dev","csscomb","cssmin:dev","replace:dev"]); // 개발중에 사용.
-	grunt.registerTask('setting', ["bower-install-simple:prod","bower:dev","copy:setting"]); // 초기에 파일셋팅해 주는것.
+	grunt.registerTask('setting', ["bower-install-simple:prod","bower:dev","copy:setting","clean:lib"]); // 초기에 파일셋팅해 주는것.
 	grunt.registerTask('dist', ["clean:dist","copy:dist","cssmin","clean:pick","replace:dist","fileindex","casperjs"]); // 배포시에 사용.
 };
