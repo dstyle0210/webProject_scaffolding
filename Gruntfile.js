@@ -1,3 +1,4 @@
+
 module.exports = function(grunt) {
 	// Project configuration.
 	grunt.initConfig({
@@ -49,13 +50,25 @@ less:{
 	}
 },
 // Autoprefixer
-autoprefixer : {
+/*autoprefixer : {
 	options : {
 		browsers: ['last 5 version','ie 7','ie 8','ie 9','ie 10','ie 11']
 	},
 	dev: {
 		src: 'src/asset/css/*.css'
 	}
+},*/
+// Autoprefixer - new postCSS
+postcss: {
+  options: {
+    map: false,
+    processors: [
+      require('autoprefixer-core')({browsers: ['last 3 version']})
+    ]
+  },
+  dev: {
+    src: 'src/asset/css/*.css'
+  }
 },
 // CSS Min
 cssmin: {
@@ -111,7 +124,7 @@ replace: {
 },
 // Clean
 clean: {
-	lib:["src/lib"],
+	lib:["src/lib"], // 셋팅후에 복사된 폴더 삭제.
 	dev: ["src/asset/css"], // 개발하는중에 CSS삭제.
 	dist: ["dist"], // 배포하는중에 CSS삭제.
 	pick:["dist/asset/css/*.css","!dist/asset/css/*.min.css"] // 배포후 컴바인 후에 min을 제외한 CSS삭제.
@@ -143,31 +156,31 @@ copy: {
 	}
 },
 
+// Casper
+casperjs:{
+	options:{},
+	files: 'casper.js'
+},
+// File Index
+fileindex:{
+	custom:{
+		options:{
+			format:function(list, options, dest){
+				var str = "<div>";
+				var arr = list;
+				for(i=0;i<arr.length;i++){
+					str+="<a href='"+((arr[i]).split("src/")[1])+"'>"+((arr[i]).split("src/")[1])+"</a><br />";
+				}
+				str += "</div>";
+				return str;
+			}
+		},
+		files: [{dest: 'src/casper.html', src: ['**/*.jsp']}]
+	}
+}
 
 
-		 casperjs: {
-			 options: {},
-		    files: 'src/casper.js' 
-		  },
-		  fileindex: {
-		        custom: {
-		            options: {
-		                format: function(list, options, dest) {
-		                	var str = "<div>";
-		                	var arr = list;
-		                	for(i=0;i<arr.length;i++){
-		                		str+="<a href='"+((arr[i]).split("src/")[1])+"'>"+((arr[i]).split("src/")[1])+"</a><br />";
-		                	}
-		                	str += "</div>";
-		                	return str;
-		                }
-		            },
-		            files: [
-		                {dest: 'src/casper.html', src: ['**/*.jsp']}
-		            ]
-		        }
-		    }
-	}); 
+	}); // grunt.initConfig 
 
 
 	/*
@@ -179,9 +192,29 @@ copy: {
 	grunt.loadNpmTasks('main-bower-files');
 	
 	
+	
+	/*
+	 * CSS 컴파일 기본원칙
+	
+	개발(dev)
+	- 1. CSS Pre-processor (LESS , SASS , Stylus)
+	- 2. AutoPrefixer
+	- 3. CSS Comb
+	
+	배포(dist)
+	- 1. CSS Min
+	- 2. CSS Comb
+	- 3. CSS Min
+	- 4. replace
+	*/
+	
+	
+	
 	// Default task(s).
 	grunt.registerTask('default', ["clean:dev","dev","watch"]); // 디폴트 , 와치시작.
-	grunt.registerTask('dev', ["less:dev","autoprefixer:dev","csscomb","cssmin:dev","replace:dev"]); // 개발중에 사용.
+	grunt.registerTask('dev', ["newer:less:dev","newer:postcss:dev","newer:csscomb"]); // 개발중에 사용.
+	grunt.registerTask('css_dist', ['cssmin','csscomb','cssmin','replace']); // 개발 종료 후 배포용.
 	grunt.registerTask('setting', ["bower-install-simple:prod","bower:dev","copy:setting","clean:lib"]); // 초기에 파일셋팅해 주는것.
-	grunt.registerTask('dist', ["clean:dist","copy:dist","cssmin","clean:pick","replace:dist","fileindex","casperjs"]); // 배포시에 사용.
+	grunt.registerTask('dist', ["clean:dist","copy:dist","cssmin","clean:pick","replace:dist","casper"]); // 배포시에 사용.
+	grunt.registerTask('casper', ["fileindex","casperjs"]); // 배포시에 사용.
 };
