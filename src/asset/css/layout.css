@@ -1,0 +1,3 @@
+/*! 사이트 공통선언부 : val.less 기본 상속 */
+.test{overflow:hidden;opacity:0.5;}
+.wrap{width:100%;overflow:hidden;}

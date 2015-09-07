@@ -1,3 +1,4 @@
+'use strict';
 requirejs.config({
     "baseUrl": "asset/js/lib",
     "paths": {
@@ -7,10 +8,31 @@ requirejs.config({
     	 "angular":"angular"
     },
     shim : {
-        "bootstrap" : { "deps" :['jquery'] }
+    	"jquery":{deps:["angular"]},
+    	"angular": {exports: "angular"},
+        "bootstrap" : { deps :['jquery'] }
     }
 });
-requirejs(["jquery","bootstrap"], function($){
-	// 드랍다운 UI컴포넌트 적용.
-	$(".data-toggle").dropdown();
+/*requirejs(["jquery","bootstrap"], function($){
+});*/
+requirejs(["angular","app/jsonLoad"], function(angular,jsonLoad){
+	var dataFn = new jsonLoad({
+		url:"/data.json",
+		app:"dataApp",
+		controller:"customersCtrl"
+	});
+	dataFn.start();
+});
+
+requirejs(["jquery","app/jqLoad"], function($,jqLoad){
+	jqLoad();
+});
+
+
+requirejs(["angular","jquery","app/jqLoad"], function(ng,$,jqLoad){
+	$(function(){
+		
+	})
+	
+	ng.module();
 });
